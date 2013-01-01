@@ -1,0 +1,19 @@
+%p#notice= notice
+%p
+  %b Title:
+  = @post.title
+%p
+  %b Body:
+  = @post.body
+%p
+  %b Comments:
+- @post.comments.each do |comment|
+  %p= comment.content
+  %p= @post.created_at.strftime("Created on %d/%m/%Y")
+  = link_to "delete comment", [@post, comment], :method => :delete, :confirm => "are you sure ?"
+= form_for [@post, @post.comments.build] do |f|
+  = f.text_area :content, :size => '40x10'
+  %p= f.submit "submit comment"
+= link_to 'Edit', edit_post_path(@post)
+|
+\#{link_to 'Back', posts_path}
